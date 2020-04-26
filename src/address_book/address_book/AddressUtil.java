@@ -421,7 +421,7 @@ public class AddressUtil {
 			System.out.println("vcf导入成功");
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("error");
+			System.out.println("vcf导入失败");
 		}
 	}
 	public void vcardwrite() {
