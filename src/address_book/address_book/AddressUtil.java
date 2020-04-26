@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.*;
 import com.csvreader.CsvReader;
@@ -42,12 +45,20 @@ public class AddressUtil {
 	// 联系人数组
 	List<PeopleTable> pt = new ArrayList<PeopleTable>();
 
-	// 增加联系人
+	/**
+	 * 增加联系人
+	 * @param e
+	 * @return
+	 */
 	public boolean addContactPerson(PeopleTable e) {
 		return pt.add(e);
 	}
 
-	// 删除联系人
+	 /**
+	  * 删除联系人
+	  * @param e
+	  * @return
+	  */
 	public boolean removeContactPerson(PeopleTable e) {
 		int length = pt.size();
 		for (int i = length - 1; i >= 0; i--) {
@@ -61,7 +72,12 @@ public class AddressUtil {
 		return false;
 	}
 
-	// 修改联系人
+	 /**
+	  * 修改联系人
+	  * @param index
+	  * @param e
+	  * @return
+	  */
 	public boolean changeContactPerson(int index, PeopleTable e) {
 		if (index <= pt.size() && index >= 0) {
 			pt.set(index, e);
@@ -71,12 +87,9 @@ public class AddressUtil {
 		}
 	}
 
-	// 查询联系人（未完成）
-	public boolean checkContactPerson() {
-		return true;
-	}
-
-	// txt导出操作
+	/**
+	 * txt导出操作
+	 */
 	public void txtwrite() {
 		JFileChooser jf = new JFileChooser();
 		jf.setFileSelectionMode(JFileChooser.SAVE_DIALOG | JFileChooser.DIRECTORIES_ONLY);
@@ -120,7 +133,9 @@ public class AddressUtil {
 		}
 	}
 
-	// txt导入操作
+	/**
+	 * txt导入操作
+	 */
 	public void txtread() {
 		JFileChooser fd = new JFileChooser();
 		fd.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -226,7 +241,9 @@ public class AddressUtil {
 		}
 	}
 
-	// csv导出操作
+	/**
+	 * csv导出操作
+	 */
 	public void csvwrite() {
 		JFileChooser jf = new JFileChooser();
 //		jf.setFileSelectionMode(JFileChooser.SAVE_DIALOG | JFileChooser.DIRECTORIES_ONLY);
@@ -282,7 +299,9 @@ public class AddressUtil {
 		}
 	}
 
-	// csv导入
+	 /**
+	  * csv导入
+	  */
 	public void csvread() {
 		// 导入操作
 		try {
@@ -336,14 +355,13 @@ public class AddressUtil {
 				i++;
 			}
 			System.out.println("导入成功");
-
-//			for(int j=0;j<pt.size();j++) {
-//				System.out.println(pt.get(0).getName());
-//			}
 		} catch (Exception e) {
 			System.out.println("导入失败");
 		}
 	}
+	/**
+	 * vcard导入
+	 */
 	public void vcardread() {
 		JFileChooser fd = new JFileChooser();
 		fd.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -424,6 +442,9 @@ public class AddressUtil {
 			System.out.println("vcf导入失败");
 		}
 	}
+	/**
+	 * vcard导出
+	 */
 	public void vcardwrite() {
 		try {
 			JFileChooser jf = new JFileChooser();
@@ -518,5 +539,95 @@ public class AddressUtil {
 		} catch (Exception e) {
 			System.out.println("vcf导出失败");
 		}
+	}
+	/**
+	 * 校验某个字符是否是a-z、A-Z
+	 *
+	 * @param c 被校验的字符
+	 * @return true代表符合条件
+	 */
+	public static boolean isWord(String tap) {
+		{
+			Pattern pattern = Pattern.compile("([a-z]|[A-Z])*");
+			return pattern.matcher(tap).matches();
+		}
+	}
+
+	/**
+	 * 判断是否为数字
+	 * 
+	 * @param str
+	 * @return true 表示是数字
+	 */
+	public static boolean isNumber(String str) {
+		for (int i = 0; i < str.length(); i++) {
+			if (!Character.isDigit(str.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * 判断字符串中是否包含中文
+	 * 
+	 * @param str 待校验字符串
+	 * @return 是否为中文
+	 * @warn 不能校验是否为中文标点符号
+	 */
+	public static boolean isContainChinese(String str) {
+		Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+		Matcher m = p.matcher(str);
+		if (m.find()) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+     * 模糊查找
+     * 姓名、电话、手机、
+     * @param text
+     * @return ptshow 
+     * 返回一个PeopleTable的list
+     * 
+     */
+    public List<PeopleTable> fuzzysearch(String text) {
+    	List<PeopleTable> ptshow = new ArrayList<PeopleTable>();
+		if (isContainChinese(text)) {
+			//有中文
+			String quanpin = PinYin.getPinYin(text);//输入的字拼音全拼
+			for (PeopleTable pttemp : pt) {
+				String name = pttemp.getName();//名字
+				String pinyinname = PinYin.getPinYin(name);//拼音名字
+				if(name.indexOf(quanpin)!=-1) {
+					//名字里有这个字
+					ptshow.add(pttemp);
+				}
+			}
+		}
+		//全为数字，直接查电话就好了
+		else if(isNumber(text)) {
+            for (PeopleTable pttemp : pt) {
+				if (pttemp.getPhone().indexOf(text)!=-1||
+						pttemp.getTelephone().indexOf(text)!=-1) {
+					//有这个数字在手机(电话)中
+					ptshow.add(pttemp);
+				}
+			}
+		}
+		//全为字母
+		else if (isWord(text)) {
+			for (PeopleTable pttemp : pt) {
+				String name = pttemp.getName();//名字
+				String pinyinname = PinYin.getPinYin(name);//拼音名字
+				String capitalname = PinYin.getPinYinHeadCharLower(name);//名字首字母
+				if(pinyinname.indexOf(text)!=-1||capitalname.indexOf(text)!=-1) {
+					//名字里有这个字
+					ptshow.add(pttemp);
+				}
+			}
+		}
+		return ptshow;
 	}
 }
