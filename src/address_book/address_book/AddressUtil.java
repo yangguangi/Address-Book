@@ -19,6 +19,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.*;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
+import com.sun.org.apache.xpath.internal.operations.Gt;
 
 import ezvcard.io.text.VCardReader;
 import ezvcard.property.Address;
@@ -111,21 +112,21 @@ public class AddressUtil {
 		for (int i = length - 1; i >= 0; i--) {
 			GroupTable temgroup = gt.get(i);
 			if (e.equals(temgroup)) {
-				//找到要删除的组，要去pt处修改，把该组给删掉
-				for (int j=0;j<e.getName().size();j++) {
-					String name = e.getName().get(j);//第j个名字，去到pt里面找
-					for(PeopleTable pttemp : pt) {
-						//若名字找到了
-						if(name.equals(pttemp.getName())) {
+				// 找到要删除的组，要去pt处修改，把该组给删掉
+				for (int j = 0; j < e.getName().size(); j++) {
+					String name = e.getName().get(j);// 第j个名字，去到pt里面找
+					for (PeopleTable pttemp : pt) {
+						// 若名字找到了
+						if (name.equals(pttemp.getName())) {
 							String[] group = pttemp.getGroup();
-							for (int k = 0 ;k<group.length;k++) {
-								//第k项的组名就是要删除的
-								if (group[k]==e.getGroup()) {
-									//最后一项放上来
-									group[k]=group[group.length-1];
-									//数组缩容
-									group = Arrays.copyOf(group, group.length-1);
-									//这个名字修改完毕
+							for (int k = 0; k < group.length; k++) {
+								// 第k项的组名就是要删除的
+								if (group[k] == e.getGroup()) {
+									// 最后一项放上来
+									group[k] = group[group.length - 1];
+									// 数组缩容
+									group = Arrays.copyOf(group, group.length - 1);
+									// 这个名字修改完毕
 									break;
 								}
 							}
@@ -139,7 +140,7 @@ public class AddressUtil {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * txt导出操作
 	 */
@@ -303,8 +304,6 @@ public class AddressUtil {
 		File fi = jf.getSelectedFile();
 		String f = fi.getAbsolutePath() + "\\通讯录.csv";
 		try {
-			// E:\eclipse2019\eclipse2019_downcc.com\path\javafx
-			System.out.println(f);
 			CsvWriter csvWriter = new CsvWriter(f, ',', Charset.forName("GBK"));
 			String[] headers = { "姓名", "电话", "手机", "电子邮箱", "生日", "相片", "工作单位", "家庭地址", "邮编", "所属组", "备注" };
 			csvWriter.writeRecord(headers);
@@ -321,7 +320,7 @@ public class AddressUtil {
 				data[i][6] = pttemp.getWorkplace();
 				data[i][7] = pttemp.getHomeaddres();
 				data[i][8] = pttemp.getPostcode();
-				// 把它变成[数据,数据,数据]的string，再存入
+				// 把它变成[数据;数据;数据]的string，再存入
 
 				String[] grouptemp = pttemp.getGroup();
 				String group = new String();
@@ -330,7 +329,7 @@ public class AddressUtil {
 					if (temp == 0) {
 						group = group + grouptemp[temp];
 					} else {
-						group = group + "," + grouptemp[temp];
+						group = group + ";" + grouptemp[temp];
 					}
 				}
 				group = group + "]";
@@ -390,25 +389,70 @@ public class AddressUtil {
 				e.setWorkplace(data[i][6]);
 				e.setHomeaddres(data[i][7]);
 				e.setPostcode(data[i][8]);
-				// 一维数组变二维数组
+				// 一维数组变二维数组error
 				String tempstr = data[i][9];
 				String[] group = new String[100];
 				if (tempstr != "") {
 					tempstr = tempstr.substring(1, tempstr.length() - 1);
-					group = tempstr.split(",");
+					group = tempstr.split(";");
 				} else {
 					group = null;
 				}
 				e.setGroup(group);
-				//导入到组类中
-//				for (int k = 0;k<group.length;k++) {
-//					
-//				}
+				
+				// 导入到组类中
+				boolean flag = false;
+				for (int k = 0; k < group.length; k++) {
+					if (gt.size() == 0) {
+						GroupTable gttemp = new GroupTable();
+						// 第一次进入
+						List<String> name = new ArrayList<String>();
+						name.add(e.getName());
+						// 设名字
+						gttemp.setName(name);
+						// 设组名
+						gttemp.setGroup(group[k]);
+						// 设置flag，非第一次进入
+						gt.add(gttemp);
+						continue;
+					}
+					//group内已经有内容了
+					// 检查组是否在gt里
+					// 在gt里，flag取true
+					int t = 0;
+					for (GroupTable gttemp : gt) {
+						flag = false;
+						if (gttemp.getGroup().equals(group[k])) {
+							flag = true;
+							break;
+						}
+						t++;
+					}
+					if (!flag) {
+						// 该组不在gt内
+						GroupTable gttemp = new GroupTable();
+						List<String> name = new ArrayList<String>();
+						name.add(data[i][0]);
+						// 设名字
+						gttemp.setName(name);
+						// 设组名
+						gttemp.setGroup(group[k]);
+						// 设置flag，非第一次进入
+						gt.add(gttemp);
+					} else {
+						GroupTable gttemp = gt.get(t);
+						List<String>name = gt.get(t).getName();
+						name.add(data[i][0]);
+						gttemp.setName(name);
+						gttemp.setGroup(gttemp.getGroup());
+						// 组在gt内，修改数据
+						gt.set(t, gttemp);
+					}
+				}
 				e.setNote(data[i][10]);
 				pt.add(e); // 把数据放入数组中
 				i++;
 			}
-			
 			System.out.println("导入成功");
 		} catch (Exception e) {
 			System.out.println("导入失败");
@@ -484,6 +528,54 @@ public class AddressUtil {
 					group[i] = group[i].substring(0, group[i].length() - 1);
 				}
 				pttemp.setGroup(group);
+				boolean flag = false;
+				for (int k = 0; k < group.length; k++) {
+					if (gt.size() == 0) {
+						GroupTable gttemp = new GroupTable();
+						// 第一次进入
+						List<String> name = new ArrayList<String>();
+						name.add(pttemp.getName());
+						// 设名字
+						gttemp.setName(name);
+						// 设组名
+						gttemp.setGroup(group[k]);
+						// 设置flag，非第一次进入
+						gt.add(gttemp);
+						continue;
+					}
+					//group内已经有内容了
+					// 检查组是否在gt里
+					// 在gt里，flag取true
+					int t = 0;
+					for (GroupTable gttemp : gt) {
+						flag = false;
+						if (gttemp.getGroup().equals(group[k])) {
+							flag = true;
+							break;
+						}
+						t++;
+					}
+					if (!flag) {
+						// 该组不在gt内
+						GroupTable gttemp = new GroupTable();
+						List<String> name = new ArrayList<String>();
+						name.add(pttemp.getName());
+						// 设名字
+						gttemp.setName(name);
+						// 设组名
+						gttemp.setGroup(group[k]);
+						// 设置flag，非第一次进入
+						gt.add(gttemp);
+					} else {
+						GroupTable gttemp = gt.get(t);
+						List<String>name = gt.get(t).getName();
+						name.add(pttemp.getName());
+						gttemp.setName(name);
+						gttemp.setGroup(gttemp.getGroup());
+						// 组在gt内，修改数据
+						gt.set(t, gttemp);
+					}
+				}
 				// 图片位置
 				pttemp.setPhotopath(vcard.getExtendedProperties().get(0).getValue());
 				// 备注
@@ -652,7 +744,7 @@ public class AddressUtil {
 		if (isContainChinese(text)) {
 			// 有中文
 			for (PeopleTable pttemp : pt) {
-				if(pttemp.getName().indexOf(text)!=-1) {
+				if (pttemp.getName().indexOf(text) != -1) {
 					ptshow.add(pttemp);
 				}
 			}
@@ -679,5 +771,32 @@ public class AddressUtil {
 			}
 		}
 		return ptshow;
+	}
+	/**
+	 * 测试类
+	 */
+	public void showgroup() {
+		int i=0;
+		for (GroupTable gttemp : gt) {
+			System.out.println(i);
+			i++;
+			System.out.println(gttemp.getGroup());
+			List<String>name = gttemp.getName();
+			for (String nametemp : name) {
+				System.out.print(nametemp);
+			}
+			System.out.println();
+		}
+	}
+	/**
+	 * 测试
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		AddressUtil ad = new AddressUtil();
+		ad.csvread();
+		ad.csvwrite();
+//		ad.showgroup();
 	}
 }
