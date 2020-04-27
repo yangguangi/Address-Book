@@ -8,6 +8,7 @@ import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,8 +43,14 @@ import net.sourceforge.cardme.vcard.types.params.TelParamType;
 
 
 public class AddressUtil {
-	// 联系人数组
-	List<PeopleTable> pt = new ArrayList<PeopleTable>();
+	/**
+	 * 联系人数组
+	 */
+	private List<PeopleTable> pt = new ArrayList<PeopleTable>();
+	/**
+	 * 联系组数组
+	 */
+	private List<GroupTable> gt = new ArrayList<GroupTable>();
 
 	/**
 	 * 增加联系人
@@ -86,7 +93,56 @@ public class AddressUtil {
 			return false;
 		}
 	}
+	
+	/**
+	 * 增加联系组
+	 * 
+	 * @param e
+	 * @return
+	 */
+	public boolean addGroup(GroupTable e) {
+		return gt.add(e);
+	}
 
+	/**
+	 * 删除联系组
+	 * 
+	 * @param e 要删除的组
+	 * @return
+	 */
+	public boolean removeGroup(GroupTable e) {
+		int length = gt.size();
+		for (int i = length - 1; i >= 0; i--) {
+			GroupTable tem = gt.get(i);
+			if (e.equals(tem)) {
+				//找到要删除的组，要去pt处修改，把该组给删掉
+				for (int j=0;j<e.getName().length;j++) {
+					String name = e.getName()[j];//第j个名字，去到pt里面找
+					for(PeopleTable pttemp : pt) {
+						//若名字找到了
+						if(name.equals(pttemp.getName())) {
+							String[] group = pttemp.getGroup();
+							for (int k = 0 ;k<group.length;k++) {
+								if (group[k].equals(name)) {
+									//把最后一个元素放到要删除处
+									group[k]=group[group.length-1];
+									//数组缩容
+									group = Arrays.copyOf(group, group.length-1);
+									break;
+								}
+							}
+							break;
+						}
+					}
+				}
+				gt.remove(tem);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	
 	/**
 	 * txt导出操作
 	 */
@@ -592,38 +648,33 @@ public class AddressUtil {
      * 返回一个PeopleTable的list
      * 
      */
-    public List<PeopleTable> fuzzysearch(String text) {
-    	List<PeopleTable> ptshow = new ArrayList<PeopleTable>();
+	public List<PeopleTable> fuzzysearch(String text) {
+		List<PeopleTable> ptshow = new ArrayList<PeopleTable>();
 		if (isContainChinese(text)) {
-			//有中文
-			String quanpin = PinYin.getPinYin(text);//输入的字拼音全拼
+			// 有中文
 			for (PeopleTable pttemp : pt) {
-				String name = pttemp.getName();//名字
-				String pinyinname = PinYin.getPinYin(name);//拼音名字
-				if(name.indexOf(quanpin)!=-1) {
-					//名字里有这个字
+				if(pttemp.getName().indexOf(text)!=-1) {
 					ptshow.add(pttemp);
 				}
 			}
 		}
-		//全为数字，直接查电话就好了
-		else if(isNumber(text)) {
-            for (PeopleTable pttemp : pt) {
-				if (pttemp.getPhone().indexOf(text)!=-1||
-						pttemp.getTelephone().indexOf(text)!=-1) {
-					//有这个数字在手机(电话)中
+		// 全为数字，直接查电话就好了
+		else if (isNumber(text)) {
+			for (PeopleTable pttemp : pt) {
+				if (pttemp.getPhone().indexOf(text) != -1 || pttemp.getTelephone().indexOf(text) != -1) {
+					// 有这个数字在手机(电话)中
 					ptshow.add(pttemp);
 				}
 			}
 		}
-		//全为字母
+		// 全为字母
 		else if (isWord(text)) {
 			for (PeopleTable pttemp : pt) {
-				String name = pttemp.getName();//名字
-				String pinyinname = PinYin.getPinYin(name);//拼音名字
-				String capitalname = PinYin.getPinYinHeadCharLower(name);//名字首字母
-				if(pinyinname.indexOf(text)!=-1||capitalname.indexOf(text)!=-1) {
-					//名字里有这个字
+				String name = pttemp.getName();// 名字
+				String pinyinname = PinYin.getPinYin(name);// 拼音名字
+				String capitalname = PinYin.getPinYinHeadCharLower(name);// 名字首字母
+				if (pinyinname.indexOf(text) != -1 || capitalname.indexOf(text) != -1) {
+					// 名字里有这个字
 					ptshow.add(pttemp);
 				}
 			}
