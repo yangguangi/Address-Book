@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.CheckBoxTableCell?>
+<?import javafx.scene.control.TableColumn?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+   <children>
+      <MenuBar maxHeight="1.7976931348623157E308" prefHeight="20.0" GridPane.columnSpan="3">
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Close" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Options">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Delete" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="About" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <VBox prefHeight="769.0" prefWidth="208.0" style="-fx-background-color: #ccc;" GridPane.rowIndex="1" GridPane.rowSpan="3">
+         <children>
+            <Label prefHeight="40.0" prefWidth="216.0" text="联系人">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Button mnemonicParsing="false" onAction="#goToAddPersonUI" prefHeight="30.0" prefWidth="226.0" text="添加" />
+            <HBox prefHeight="30.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="所有联系人">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #fff;" text="0">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="30.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #fff;" text="未分组联系人">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #fff;" text="0">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Label prefHeight="40.0" prefWidth="221.0" text="联系组">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Button id="addGroup" mnemonicParsing="false" onAction="#goToAddGroupUI" prefHeight="30.0" prefWidth="226.0" text="添加" />
+            <Button mnemonicParsing="false" onAction="#goToDeleteGroupUI" prefHeight="30.0" prefWidth="226.0" text="删除" />
+            <ListView prefHeight="553.0" prefWidth="210.0" />
+         </children>
+      </VBox>
+      <HBox alignment="CENTER_LEFT" maxHeight="60.0" minHeight="40.0" prefHeight="40.0" prefWidth="1120.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Button mnemonicParsing="false" onAction="#goToDeletePersonUI" prefHeight="25.0" prefWidth="70.0" stylesheets="@../address_book/style.css" text="删除">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" stylesheets="@../address_book/style.css" text="编辑">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets left="15.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="导入">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="导入CSV" />
+                  <MenuItem mnemonicParsing="false" text="导入vCard" />
+               </items>
+               <HBox.margin>
+                  <Insets left="15.0" top="5.0" />
+               </HBox.margin>
+            </MenuButton>
+            <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="导出">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#goToExportCSVUI" text="导出CSV" />
+                  <MenuItem mnemonicParsing="false" onAction="#goToExportVCardUI" text="导出vCard" />
+               </items>
+               <HBox.margin>
+                  <Insets left="15.0" top="5.0" />
+               </HBox.margin>
+            </MenuButton>
+            <TextField id="keyword" prefHeight="25.0" prefWidth="250.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets left="30.0" top="5.0" />
+               </HBox.margin>
+            </TextField>
+            <Button id="searchBtn" mnemonicParsing="false" onAction="#Searched" prefHeight="25.0" prefWidth="50.0" text="搜索">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets top="5.0" left="-10.0"/>
+               </HBox.margin>
+            </Button>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </HBox>
+      <TableView id="tableView" editable="true" prefHeight="661.0" prefWidth="1120.0" tableMenuButtonVisible="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <columns>
+          <TableColumn prefWidth="45.0" />
+          <TableColumn prefWidth="100.0" text="姓名" />
+            <TableColumn prefWidth="120.0" text="手机" />
+            <TableColumn prefWidth="120.0" text="电话" />
+            <TableColumn prefWidth="120.0" text="邮箱" />
+            <TableColumn prefWidth="120.0" text="工作单位" />
+            <TableColumn prefWidth="120.0" text="家庭住址" />
+            <TableColumn prefWidth="120.0" text="生日" />
+            <TableColumn prefWidth="100.0" text="邮编" />
+            <TableColumn prefWidth="120.0" text="所在分组" />
+        </columns>
+         <GridPane.margin>
+            <Insets top="2.0" />
+         </GridPane.margin>
+      </TableView>
+      <VBox alignment="TOP_CENTER" minHeight="0.0" prefHeight="780.0" prefWidth="270.0" style="-fx-background-color: #ccc;" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="3">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets bottom="20.0" top="20.0"/>
+               </VBox.margin>
+               <image>
+                  <Image url="@../../../images/img1.jpg"/>
+               </image>
+            </ImageView>
+            <VBox prefHeight="769.0" prefWidth="272.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="55.0" text="姓名" />
+                        <TextField prefHeight="23.0" prefWidth="180.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="55.0" text="手机号码" />
+                        <TextField prefHeight="23.0" prefWidth="180.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="55.0" text="电话" />
+                        <TextField prefHeight="23.0" prefWidth="180.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="55.0" text="电子邮箱" />
+                        <TextField prefHeight="23.0" prefWidth="180.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="55.0" text="工作单位" />
+                        <TextField prefHeight="23.0" prefWidth="180.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="55.0" text="生日" />
+                        <TextField prefHeight="23.0" prefWidth="180.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="55.0" text="家庭地址" />
+                        <TextField prefHeight="23.0" prefWidth="180.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="55.0" text="邮编" />
+                        <TextField prefHeight="23.0" prefWidth="180.0" />
+                     </children>
+                  </HBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="272.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="300.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="20.0" prefWidth="55.0" text="所在分组" />
+                              <VBox prefHeight="53.0" prefWidth="180.0">
+                                 <children>
+                                    <ListView prefHeight="200.0" prefWidth="200.0" />
+                                 </children>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0">
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="235.0" text="备注">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin></Label>
+                        <TextArea prefHeight="200.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets left="15.0" right="15.0" />
+                           </VBox.margin>
+                        </TextArea>
+                     </children>
+                  </VBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="56.0" prefWidth="272.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#goToDeletePersonUI" prefHeight="30.0" prefWidth="60.0" text="删除">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#Reseted" prefHeight="30.0" prefWidth="60.0" text="重置">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#Confirmed" prefHeight="30.0" prefWidth="60.0" text="保存">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children></VBox>
+         </children>
+      </VBox>
+      <Pagination maxPageIndicatorCount="5" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
+         <effect>
+            <Blend />
+         </effect>
+      </Pagination>
+   </children>
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="210.0" minWidth="100.0" prefWidth="210.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1200.0" minWidth="600.0" percentWidth="70.0" prefWidth="1126.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="265.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="60.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="771.0" minHeight="10.0" prefHeight="674.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="771.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+</GridPane>
