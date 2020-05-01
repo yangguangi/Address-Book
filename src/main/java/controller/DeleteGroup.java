@@ -15,7 +15,7 @@ public class DeleteGroup extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../fxml/DeleteGroup.fxml"));
-        primaryStage.setTitle("åˆ é™¤è”ç³»ç»„");
+        primaryStage.setTitle("É¾³ıÁªÏµ×é");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
@@ -28,12 +28,12 @@ public class DeleteGroup extends Application {
 		start(stage);
 	}
 	
-	//ç‚¹å‡» å–æ¶ˆ æŒ‰é’®å…³é—­é¡µé¢
+	//µã»÷ È¡Ïû °´Å¥¹Ø±ÕÒ³Ãæ
 	public void Closed() throws Exception {
 		DeleteGroup.stage.close();
 	}
 	
-	//ç‚¹å‡» ç¡®å®š æŒ‰é’®å…³é—­é¡µé¢
+	//µã»÷ È·¶¨ °´Å¥¹Ø±ÕÒ³Ãæ
 	public void Confirmed() throws Exception {
 		DeleteGroup.stage.close();
 	}

@@ -14,7 +14,7 @@ public class FXMain extends Application
 	public void start(Stage primaryStage) throws Exception
 	{	
 		Parent root = FXMLLoader.load(getClass().getResource("../fxml/MainUI.fxml"));
-        primaryStage.setTitle("閫氳绠＄悊绯荤粺");
+        primaryStage.setTitle("通讯录管理系统");
         primaryStage.setScene(new Scene(root, 1600, 800));
         primaryStage.setMinWidth(900);
         primaryStage.setMinHeight(300);

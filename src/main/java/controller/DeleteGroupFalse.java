@@ -15,7 +15,7 @@ public class DeleteGroupFalse extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../fxml/DeleteGroupFalse.fxml"));
-        primaryStage.setTitle("è¯·é€‰æ‹©è¦åˆ é™¤çš„è”ç³»ç»„");
+        primaryStage.setTitle("ÇëÑ¡ÔñÒªÉ¾³ıµÄÁªÏµ×é");
         primaryStage.setScene(new Scene(root));
         primaryStage.show(); 
     }
@@ -28,12 +28,12 @@ public class DeleteGroupFalse extends Application {
 		start(stage);
 	}
 	
-	//ç‚¹å‡» å–æ¶ˆ æŒ‰é’®å…³é—­é¡µé¢
+	//µã»÷ È¡Ïû °´Å¥¹Ø±ÕÒ³Ãæ
 	public void Closed() throws Exception {
 		DeleteGroupFalse.stage.close();
 	}
 	
-	//ç‚¹å‡» ç¡®å®š æŒ‰é’®å…³é—­é¡µé¢
+	//µã»÷ È·¶¨ °´Å¥¹Ø±ÕÒ³Ãæ
 	public void Confirmed() throws Exception {
 		DeleteGroupFalse.stage.close();
 	}

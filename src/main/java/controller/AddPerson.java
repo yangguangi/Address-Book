@@ -15,7 +15,7 @@ public class AddPerson extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../fxml/AddPerson.fxml"));
-        primaryStage.setTitle("æ·»åŠ è”ç³»äºº");
+        primaryStage.setTitle("Ìí¼ÓÁªÏµÈË");
         primaryStage.setScene(new Scene(root));
         primaryStage.show(); 
     }
@@ -28,17 +28,17 @@ public class AddPerson extends Application {
 		start(stage);
 	}
 	
-	//ç‚¹å‡» å–æ¶ˆ æŒ‰é’®å…³é—­é¡µé¢
+	//µã»÷ È¡Ïû °´Å¥¹Ø±ÕÒ³Ãæ
 	public void Closed() throws Exception {
 		AddPerson.stage.close();
 	}
 	
-	//ç‚¹å‡» ç¡®å®š æŒ‰é’®å…³é—­é¡µé¢
+	//µã»÷ È·¶¨ °´Å¥¹Ø±ÕÒ³Ãæ
 	public void Confirmed() throws Exception {
 		AddPerson.stage.close();
 	}
 	
-	//ç‚¹å‡» é‡ç½® æŒ‰é’®å…³é—­é¡µé¢
+	//µã»÷ ÖØÖÃ °´Å¥¹Ø±ÕÒ³Ãæ
 	public void Reseted() throws Exception {
 		AddPerson.stage.close();
 	}

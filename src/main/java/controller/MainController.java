@@ -25,72 +25,72 @@ public class MainController
 		
 	}
 	
-	//æ·»åŠ è”ç³»ç»„
+	//Ìí¼ÓÁªÏµ×é
 	public void goToAddGroupUI() throws Exception {
 		controller.AddGroup addGroup = new AddGroup();
 		addGroup.showWindow();
 	}
 	
-	//æ·»åŠ è”ç³»äºº
+	//Ìí¼ÓÁªÏµÈË
 	public void goToAddPersonUI() throws Exception {
 		controller.AddPerson addPerson = new AddPerson();
 		addPerson.showWindow();
 	}
 	
-	//å¯¼å‡ºæ–‡ä»¶ä¸ºCSV
+	//µ¼³öÎÄ¼şÎªCSV
 	public void goToExportCSVUI() throws Exception {
 		controller.ExportCSV exportCSV = new ExportCSV();
 		exportCSV.showWindow();
 	}
 	
-	//å¯¼å‡ºæ–‡ä»¶ä¸ºvCard
+	//µ¼³öÎÄ¼şÎªvCard
 	public void goToExportVCardUI() throws Exception {
 		controller.ExportVCard exportVCard = new ExportVCard();
 		exportVCard.showWindow();
 	}
 	
-	//åˆ é™¤è”ç³»äººç¡®è®¤ç•Œé¢
+	//É¾³ıÁªÏµÈËÈ·ÈÏ½çÃæ
 	public void goToDeletePersonUI() throws Exception {
 		controller.DeletePerson deletePerson = new DeletePerson();
 		deletePerson.showWindow();
 	}
 	
-	//æœªé€‰æ‹©åˆ é™¤çš„è”ç³»äººå¼¹å‡ºå¤±è´¥é¡µé¢
+	//Î´Ñ¡ÔñÉ¾³ıµÄÁªÏµÈËµ¯³öÊ§°ÜÒ³Ãæ
 	public void goToDeletePersonFalseUI() throws Exception {
 		controller.DeletePersonFalse deletePersonFalse = new DeletePersonFalse();
 		deletePersonFalse.showWindow();
 	}
 
-	//åˆ é™¤è”ç³»ç»„ç¡®è®¤ç•Œé¢
+	//É¾³ıÁªÏµ×éÈ·ÈÏ½çÃæ
 	public void goToDeleteGroupUI() throws Exception {
 		controller.DeleteGroup deleteGroup = new DeleteGroup();
 		deleteGroup.showWindow();
 	}
 	
-	//æœªé€‰æ‹©åˆ é™¤çš„è”ç³»ç»„å¼¹å‡ºå¤±è´¥é¡µé¢
+	//Î´Ñ¡ÔñÉ¾³ıµÄÁªÏµ×éµ¯³öÊ§°ÜÒ³Ãæ
 	public void goToDeleteGroupFalseUI() throws Exception {
 		controller.DeleteGroupFalse deleteGroupFalse = new DeleteGroupFalse();
 		deleteGroupFalse.showWindow();
 	}
 	
-	//ç”¨æˆ·ä¿¡æ¯æ ç‚¹å‡» ä¿å­˜ æŒ‰é’®å…³é—­é¡µé¢
+	//ÓÃ»§ĞÅÏ¢À¸µã»÷ ±£´æ °´Å¥¹Ø±ÕÒ³Ãæ
 	public void Confirmed() throws Exception {
-		System.out.println("è§¦å‘ä¿å­˜");
+		System.out.println("´¥·¢±£´æ");
 	}
 	
-	//ç”¨æˆ·ä¿¡æ¯æ ç‚¹å‡» é‡ç½® æŒ‰é’®å…³é—­é¡µé¢
+	//ÓÃ»§ĞÅÏ¢À¸µã»÷ ÖØÖÃ °´Å¥¹Ø±ÕÒ³Ãæ
 	public void Reseted() throws Exception {
-		System.out.println("è§¦å‘é‡ç½®");
+		System.out.println("´¥·¢ÖØÖÃ");
 	}
 	
-	//ç”¨æˆ·ä¿¡æ¯æ ç‚¹å‡» å¤´åƒ æŒ‰é’®å…³é—­é¡µé¢
+	//ÓÃ»§ĞÅÏ¢À¸µã»÷ Í·Ïñ °´Å¥¹Ø±ÕÒ³Ãæ
 	public void ChangedImg() throws Exception {
-		System.out.println("è§¦å‘æ›´æ¢å¤´åƒäº‹ä»¶");
+		System.out.println("´¥·¢¸ü»»Í·ÏñÊÂ¼ş");
 	}
 	
-	//ç‚¹å‡» æœç´¢ æŒ‰é’®è§¦å‘äº‹ä»¶
+	//µã»÷ ËÑË÷ °´Å¥´¥·¢ÊÂ¼ş
 	public void Searched() throws Exception {
-		System.out.println("è§¦å‘æœç´¢äº‹ä»¶");
+		System.out.println("´¥·¢ËÑË÷ÊÂ¼ş");
 	}
 	
 }

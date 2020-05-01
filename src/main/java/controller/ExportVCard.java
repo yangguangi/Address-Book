@@ -15,7 +15,7 @@ public class ExportVCard extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../fxml/ExportVCard.fxml"));
-        primaryStage.setTitle("瀵煎嚭鏂囦欢涓簐Card");
+        primaryStage.setTitle("导出文件为vCard");
         primaryStage.setScene(new Scene(root));
         primaryStage.show(); 
     }
@@ -28,12 +28,12 @@ public class ExportVCard extends Application {
 		start(stage);
 	}
 	
-	//鐐瑰嚮 鍙栨秷 鎸夐挳鍏抽棴椤甸潰
+	//点击 取消 按钮关闭页面
 	public void Closed() throws Exception {
 		ExportVCard.stage.close();
 	}
 	
-	//鐐瑰嚮 纭畾 鎸夐挳鍏抽棴椤甸潰
+	//点击 确定 按钮关闭页面
 	public void Confirmed() throws Exception {
 		ExportVCard.stage.close();
 	}

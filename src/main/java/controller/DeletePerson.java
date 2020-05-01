@@ -15,7 +15,7 @@ public class DeletePerson extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../fxml/DeletePerson.fxml"));
-        primaryStage.setTitle("åˆ é™¤è”ç³»äºº");
+        primaryStage.setTitle("É¾³ıÁªÏµÈË");
         primaryStage.setScene(new Scene(root));
         primaryStage.show(); 
     }
@@ -28,12 +28,12 @@ public class DeletePerson extends Application {
 		start(stage);
 	}
 	
-	//ç‚¹å‡» å–æ¶ˆ æŒ‰é’®å…³é—­é¡µé¢
+	//µã»÷ È¡Ïû °´Å¥¹Ø±ÕÒ³Ãæ
 	public void Closed() throws Exception {
 		DeletePerson.stage.close();
 	}
 	
-	//ç‚¹å‡» ç¡®å®š æŒ‰é’®å…³é—­é¡µé¢
+	//µã»÷ È·¶¨ °´Å¥¹Ø±ÕÒ³Ãæ
 	public void Confirmed() throws Exception {
 		DeletePerson.stage.close();
 	}
