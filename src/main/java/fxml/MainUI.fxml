@@ -130,8 +130,8 @@
             </Button>
             <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="导入">
                <items>
-                  <MenuItem mnemonicParsing="false" text="导入CSV" />
-                  <MenuItem mnemonicParsing="false" text="导入vCard" />
+                  <MenuItem mnemonicParsing="false" onAction="#goToImportCSVUI" text="导入CSV" />
+                  <MenuItem mnemonicParsing="false" onAction="#goToImportVCardUI" text="导入vCard" />
                </items>
                <HBox.margin>
                   <Insets left="15.0" top="5.0" />
